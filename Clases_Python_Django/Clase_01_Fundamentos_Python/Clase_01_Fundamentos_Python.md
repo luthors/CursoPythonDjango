@@ -57,11 +57,11 @@ Para profundizar esta clase tienes material separado por enfoque:
 
 ```mermaid
 flowchart TD
-    A[Entrada con input()] --> B[Procesar lógica]
-    B --> C{Condición}
-    C -->|Verdadero| D[Mostrar resultado 1]
-    C -->|Falso| E[Mostrar resultado 2]
-    E --> F[Revisar errores y mejorar]
+    A["Entrada con input()"] --> B["Procesar lógica"]
+    B --> C{"Condición"}
+    C -->|Verdadero| D["Mostrar resultado 1"]
+    C -->|Falso| E["Mostrar resultado 2"]
+    E --> F["Revisar errores y mejorar"]
     D --> F
 ```
 
