@@ -2,8 +2,7 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '0 13 * * *'   # Se ejecuta todos los días 13:00 UTC
-    - cron: '0 04 * * *'   
+    - cron: '07 04 * * *'   # Se ejecuta todos los días 13:00 UTC
   workflow_dispatch:       # Permite ejecutarlo manualmente
 
 jobs:
