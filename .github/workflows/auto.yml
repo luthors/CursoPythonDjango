@@ -2,7 +2,20 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '07 04 * * *'   # Se ejecuta todos los días 13:00 UTC
+    - cron: '00 06 * * *'   # Se ejecuta todos los días 13:00 UTC
+    - cron: '00 07 * * *'
+    - cron: '00 08 * * *'
+    - cron: '00 09 * * *'   # Se ejecuta todos los días 13:00 UTC
+    - cron: '00 10 * * *'
+    - cron: '00 11 * * *'
+    - cron: '00 12 * * *'   # Se ejecuta todos los días 13:00 UTC
+    - cron: '00 13 * * *'
+    - cron: '00 08 * * *'
+    - cron: '00 14 * * *'   # Se ejecuta todos los días 13:00 UTC
+    - cron: '00 15 * * *'
+    - cron: '00 16 * * *'
+    
+    
   workflow_dispatch:       # Permite ejecutarlo manualmente
 
 jobs:
@@ -19,7 +32,7 @@ jobs:
 
       - name: Commit and Push
         run: |
-          git config user.name "Luthors"
+          git config user.name "luthors"
           git config user.email "luis.g.toro@gmail.com"
           git add .
           git commit -m "Auto update $(date)" || echo "No changes"
