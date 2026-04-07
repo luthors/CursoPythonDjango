@@ -2,21 +2,12 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '00 06 * * *'   # Se ejecuta todos los días 13:00 UTC
-    #- cron: '00 07 * * *'
-    # - cron: '00 08 * * *'
-    - cron: '00 09 * * *'   # Se ejecuta todos los días 13:00 UTC
-    #- cron: '00 10 * * *'
+    - cron: '00 06 * * *'
+    - cron: '00 09 * * *'
     - cron: '00 11 * * *'
-    #- cron: '00 12 * * *'   # Se ejecuta todos los días 13:00 UTC
-    #- cron: '00 13 * * *'
     - cron: '00 08 * * *'
-    #- cron: '00 14 * * *'   # Se ejecuta todos los días 13:00 UTC
-    #- cron: '00 15 * * *'
     - cron: '00 16 * * *'
-    
-    
-  workflow_dispatch:       # Permite ejecutarlo manualmente
+  workflow_dispatch:
 
 jobs:
   build:
@@ -26,14 +17,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Make changes
+      - name: Dynamic Commits by Day
         run: |
-          echo "Update: $(date)" >> log.txt
+          # 1. Obtener día (1=Lun, 2=Mar, 3=Mie, 4=Jue, 5=Vie, 6=Sab, 7=Dom)
+          DAY=$(date +%u)
 
-      - name: Commit and Push
-        run: |
+          # 2. Definir límites: [0, Lun, Mar, Mie, Jue, Vie, Sab, Dom]
+          # Ponemos 0 en el índice cero para que el 1 sea Lunes
+          LIMITS=(0 5 3 6 10 12 1 1)
+          
+          # 3. Obtener el número de commits para hoy
+          CANTIDAD=${LIMITS[$DAY]}
+          
+          echo "Hoy es día $DAY, se realizarán $CANTIDAD commits."
+
+          # 4. Configurar Git una sola vez
           git config user.name "luthors"
           git config user.email "luis.g.toro@gmail.com"
-          git add .
-          git commit -m "Auto update $(date)" || echo "No changes"
+
+          # 5. Bucle para crear los commits solicitados
+          for ((i=1; i<=$CANTIDAD; i++))
+          do
+            echo "Update $i/$CANTIDAD: $(date)" >> log.txt
+            git add log.txt
+            git commit -m "Auto update $i/$CANTIDAD - $(date)" || echo "No hay cambios"
+          done
+
+          # 6. Subir todos los commits juntos
           git push
